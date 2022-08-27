@@ -27,8 +27,8 @@ type AuthContextData = {
 export const AuthContext = createContext({} as AuthContextData);
 
 export function signOut() {
-  destroyCookie(undefined, "next.cubik.token");
-  destroyCookie(undefined, "next.cubik.refreshToken");
+  destroyCookie(undefined, "next.auth.token");
+  destroyCookie(undefined, "next.auth.refreshToken");
 
   Router.push("/");
 }
@@ -38,7 +38,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = !!user;
 
   useEffect(() => {
-    const { "next.cubik.token": token } = parseCookies();
+    const { "next.auth.token": token } = parseCookies();
 
     if (token) {
       api
@@ -63,12 +63,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       const { token, refreshToken, permissions, roles } = response.data;
 
-      setCookie(null, "next.cubik.token", token, {
+      setCookie(null, "next.auth.token", token, {
         maxAge: 60 * 60 * 24 * 30, // 1 month
         path: "/",
       });
 
-      setCookie(null, "next.cubik.refreshToken", refreshToken, {
+      setCookie(null, "next.auth.refreshToken", refreshToken, {
         maxAge: 60 * 60 * 24 * 30, // 1 month
         path: "/",
       });

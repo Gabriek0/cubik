@@ -12,7 +12,7 @@ export const api = axios.create({
 
 api.defaults.headers.common[
   "Authorization"
-] = `Bearer ${cookies["next.cubik.token"]}`;
+] = `Bearer ${cookies["next.auth.token"]}`;
 
 // Intercept request
 
@@ -26,7 +26,7 @@ api.interceptors.response.use(
         // renew token
         cookies = parseCookies();
 
-        const { "next.cubik.refreshToken": refreshToken } = cookies;
+        const { "next.auth.refreshToken": refreshToken } = cookies;
 
         // all information to repeat request
         const originalConfig = error.config;
@@ -41,14 +41,14 @@ api.interceptors.response.use(
             .then((response) => {
               const { token } = response.data;
 
-              setCookie(undefined, "next.cubik.token", token, {
+              setCookie(undefined, "next.auth.token", token, {
                 maxAge: 60 * 60 * 24 * 30, // 30 days
                 path: "/",
               });
 
               setCookie(
                 undefined,
-                "next.cubik.refreshToken",
+                "next.auth.refreshToken",
                 response.data.refreshToken,
                 {
                   maxAge: 60 * 60 * 24 * 30, // 30 days
