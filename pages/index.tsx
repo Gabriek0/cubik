@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { FormEvent, useContext, useState } from "react";
@@ -37,6 +37,14 @@ const Home: NextPage = () => {
       <button type="submit">Enviar</button>
     </form>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  console.log(ctx.req.cookies);
+
+  return {
+    props: {},
+  };
 };
 
 export default Home;
