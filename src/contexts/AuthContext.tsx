@@ -1,6 +1,13 @@
 import Router from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import {
+  createContext,
+  MutableRefObject,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { api } from "../services/apiClient";
 
 type User = {
@@ -19,9 +26,11 @@ type AuthProviderProps = {
 };
 
 type AuthContextData = {
-  signIn(credentials: SignInCredentials): Promise<void>;
+  signIn: (credentials: SignInCredentials) => Promise<void>;
+  signOut: () => void;
   isAuthenticated: boolean;
   user: User;
+  broadCastAuth: MutableRefObject<BroadcastChannel | null>;
 };
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -35,6 +44,7 @@ export function signOut() {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>({} as User);
+  const broadCastAuth = useRef<BroadcastChannel | null>(null);
   const isAuthenticated = !!user;
 
   useEffect(() => {
@@ -53,6 +63,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
         });
     }
   }, []);
+
+  useEffect(() => {
+    broadCastAuth.current = new BroadcastChannel("auth");
+
+    broadCastAuth.current.onmessage = (message) => {
+      switch (message.data) {
+        case "signOut":
+          signOut();
+          break;
+
+        default:
+          break;
+      }
+    };
+  }, [broadCastAuth]);
 
   async function signIn({ email, password }: SignInCredentials) {
     try {
@@ -88,7 +113,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated, user }}>
+    <AuthContext.Provider
+      value={{ signIn, signOut, isAuthenticated, broadCastAuth, user }}
+    >
       {children}
     </AuthContext.Provider>
   );
