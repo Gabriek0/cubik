@@ -1,46 +1,40 @@
-<h1 align="center">Authentication and authorization</h1>
+<h1 align="left">Authentication and authorization</h1>
 
 
 <p align="justify">A study project, with the purpose of deepening my knowledge of authentication and authorization.</p>
 
 
-### :nut_and_bolt: Tecnologias
-
-Esse projeto foi desenvolvido com as seguintes tecnologias:
+### :nut_and_bolt: Technologies
 
 - [Javascript][javascript]
 - [TypeScript][typescript]
-- [React][reactjs]
-- [Webpack][webpack]
-- [Babel][babel]
-- [SASS][sass]
-- [Yarn][yarn]
+- [Nookies][nookies]
+- [JWT Decode][jwt-decode]
+- [Axios][axios]
 
 [javascript]: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript
 [typescript]: https://www.typescriptlang.org/
-[reactjs]: https://reactjs.org
-[webpack]: https://webpack.js.org/
-[babel]: https://babeljs.io/
-[sass]: https://sass-lang.com/
-[yarn]: https://yarnpkg.com/
+[nookies]: https://www.npmjs.com/package/nookies
+[jwt-decode]: https://www.npmjs.com/package/jwt-decode
+[axios]: https://axios-http.com/docs/intro
 
-### 🤔 Como rodar o projeto? 
+### 🤔 How run it? 
 
 ```bash
-# Clone o repositório
-git clone https://github.com/Gabriek0/github-explorer.git
+# Clone the repository
+git clone https://github.com/Gabriek0/next_auth.git
 
-# Mude para o diretório do projeto
-cd https://github.com/Gabriek0/github-explorer.git
+# CHange to the project directory
+cd https://github.com/Gabriek0/next_auth.git
 
-# Instale as dependências
+# Install the dependencies
 yarn
 
-# Rode o projeto
+# Run the project
 yarn dev
 ```
 
-###🧑 Autor do Projeto
+###🧑 Project author
 
 <table>
   <tr>
